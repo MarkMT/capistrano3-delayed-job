@@ -72,6 +72,7 @@ namespace :delayed_job do
     on roles(delayed_job_roles) do
       within release_path do
         with rails_env: fetch(:rails_env) do
+          puts "***** args: #{delayed_job_args.inspect}"
           execute :bundle, :exec, delayed_job_bin, delayed_job_args, :restart
         end
       end
@@ -80,6 +81,7 @@ namespace :delayed_job do
 
   desc 'Default task - conditionally restart'
   task :default do
+    puts "***** invoking restart..."
     invoke 'delayed_job:restart' if fetch(:delayed_job_default_hooks, true)
   end
 
